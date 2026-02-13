@@ -1,6 +1,6 @@
 # --- SECURITY (Sabse Zaroori) ---
 .env
-config.py
+
 TOKEN
 secrets.py
 
