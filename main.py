@@ -370,12 +370,13 @@ def handle_start(message):
             welcome_text = (
                 f"👋 <b>Welcome {message.from_user.first_name}!</b>\n\n"
             )
-            markup = types.InlineKeyboardMarkup()
-            markup.add(types.InlineKeyboardButton("🤝 Contribute/Donate", callback_data="donate"))
-            
+# --- START MENU BUTTONS ---
+
+# 👇 YE WALI LINE ADD KAREIN 👇
+            markup.add(types.InlineKeyboardButton("📚 Share Material", callback_data="contribute")) 
             if user_id == config.ADMIN_ID:
-                markup.add(types.InlineKeyboardButton("👑 Admin Dashboard", callback_data="stats"))
-            
+
+                markup.add(types.InlineKeyboardButton("👑 Admin Dashboard", callback_data="stats"))           
             # Yahan Welcome Image Bhej rahe hain
             bot.send_photo(message.chat.id, START_IMG, caption=welcome_text, parse_mode="HTML", reply_markup=markup)
 
@@ -481,6 +482,40 @@ def handle_content(message):
         print(f"Handler Error: {e}")
 
 # --- UPDATE CAPTION COMMAND ---
+
+# --- CONTRIBUTE COMMAND ---
+@bot.message_handler(commands=['contribute'])
+def handle_contribution(message):
+    # 1. Image URL (Community/Help Theme)
+    CONTRIBUTE_IMG = "https://i.ibb.co/mrG6cLX0/happy-young-employees-giving-support-help-each-other-179970-676.jpg" 
+    
+    # 2. Aapka Contact Link (Jahan log file bhejenge)
+    # ⚠️ Yahan apna Username (e.g., https://t.me/Aryan_Admin) jarur dalein
+    SUBMISSION_LINK = "https://t.me/coolegepyqbot" 
+    
+    # 3. Caption Text
+    text = (
+        f"🤝 <b>Community Contribution</b>\n"
+        f"━━━━━━━━━━━━━━━━━━\n\n"
+        f"📚 <b>Gyan Baantne Se Badhta Hai!</b>\n\n"
+        f"Agar aapke paas koi bhi useful <b>Study Material, Notes, PYQs</b> ya <b>Books</b> hain, to please humare saath share karein.\n\n"
+        f"🌟 <b>Kyun Share Karein?</b>\n"
+        f"Aapka ek chhota sa contribution kisi <b>Junior</b> ya <b>Dost</b> ka pura semester bacha sakta hai. Aayiye mil kar sabki madad karein!\n\n"
+        f"📤 <b>Kaise Bhejein?</b>\n"
+        f"Niche button par click karke aap direct Admin ko file bhej sakte hain."
+    )
+    
+    # 4. Button
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("📤 Send Materials Here", url=SUBMISSION_LINK))
+    
+    # 5. Send Message
+    try:
+        bot.send_photo(message.chat.id, CONTRIBUTE_IMG, caption=text, parse_mode="HTML", reply_markup=markup)
+    except Exception:
+        bot.send_message(message.chat.id, text, parse_mode="HTML", reply_markup=markup)
+
+
 @bot.message_handler(commands=['edit'])
 def handle_edit_command(message):
     if message.from_user.id != config.ADMIN_ID: return

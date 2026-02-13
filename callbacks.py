@@ -11,6 +11,44 @@ def register_callbacks(bot):
     """
     Registers all callback query handlers to the bot.
     """
+    @bot.callback_query_handler(func=lambda call: call.data == 'contribute')
+    def callback_contribute(call):
+        try:
+            # 1. Loading Stop
+            bot.answer_callback_query(call.id)
+            
+            # 2. Image & Text
+            CONTRIBUTE_IMG = "https://i.ibb.co/mrG6cLX0/happy-young-employees-giving-support-help-each-other-179970-676.jpg" 
+            
+            # ⚠️ Yahan apna Username daalna mat bhoolna
+            SUBMISSION_LINK = "https://t.me/coolegepyqbot" 
+            
+            text = (
+                f"🤝 <b>Community Contribution</b>\n"
+                f"━━━━━━━━━━━━━━━━━━\n\n"
+                f"📚 <b>Gyan Baantne Se Badhta Hai!</b>\n\n"
+                f"Agar aapke paas koi bhi useful <b>Study Material</b> hai, to please share karein.\n\n"
+                f"📤 <b>Kaise Bhejein?</b>\n"
+                f"Niche button par click karke aap direct Admin ko file bhej sakte hain."
+            )
+            
+            markup = types.InlineKeyboardMarkup()
+            markup.add(types.InlineKeyboardButton("📤 Send Materials Here", url=SUBMISSION_LINK))
+            
+            # Back Button (Optional)
+            markup.add(types.InlineKeyboardButton("🔙 Back", callback_data="home")) 
+            
+            # Purana message delete karke naya bhejo
+            try:
+                bot.delete_message(call.message.chat.id, call.message.message_id)
+            except:
+                pass
+                
+            bot.send_photo(call.message.chat.id, CONTRIBUTE_IMG, caption=text, parse_mode="HTML", reply_markup=markup)
+            
+        except Exception as e:
+            print(f"Contribute Callback Error: {e}")
+
 
     # --- 1. LIST NAVIGATION (Next/Prev) ---
     @bot.callback_query_handler(func=lambda call: call.data.startswith('list_'))
@@ -282,3 +320,4 @@ def deliver_file_internal(bot, chat_id, unique_code):
             
     except Exception as e:
         print(f"Deliver Error: {e}")
+
