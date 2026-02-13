@@ -1,0 +1,51 @@
+# --- SECURITY (Sabse Zaroori) ---
+.env
+config.py
+TOKEN
+secrets.py
+
+# --- DATABASE (User Data) ---
+# Ye files GitHub par nahi jani chahiye, ye Render par banengi
+*.db
+*.sqlite
+*.sqlite3
+files.db
+
+# --- STATE FILES (Jo baar-baar badalti hain) ---
+services/*.json
+rotation_state.json
+
+# --- BACKUPS & TEMP FILES ---
+# Backup commands se banne wali files upload na ho
+backup_*.zip
+temp_restore.zip
+*.log
+
+# --- PYTHON JUNK (System Files) ---
+# Ye files computer apne aap banata hai, GitHub ko inki zaroorat nahi
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- VIRTUAL ENVIRONMENT ---
+# Ye folder bahut bhaari hota hai, Render khud install karega requirements.txt se
+venv/
+env/
+.venv/
+.env/
+
+# --- IDE SETTINGS (VS Code / PyCharm) ---
+.vscode/
+.idea/
+.DS_Store
+
+tempdatabase.py
+
+tempcallbacks.py
+
+temp.py
+
+localhost.txt
+
+bot_database.db
